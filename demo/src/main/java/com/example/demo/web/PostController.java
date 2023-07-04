@@ -30,7 +30,7 @@ public class PostController {
         return ResponseEntity.ok().body(dto);
     }
 
-    @PostMapping("/save")
+    @PostMapping("/")
     public ResponseEntity<String> save(@RequestBody PostSaveRequestDto requestDto) {
         String savePost = postService.save(requestDto);
 
@@ -48,9 +48,11 @@ public class PostController {
         return ResponseEntity.ok().body(dto);
     }
 
-    @PatchMapping("/update/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<String> update(@PathVariable Long id, @RequestBody PostUpdateRequestDto requestDto) {
         postService.update(id, requestDto);
+
+        log.info("update : {}", requestDto);
 
         return ResponseEntity.ok().body("변경 완료");
     }
