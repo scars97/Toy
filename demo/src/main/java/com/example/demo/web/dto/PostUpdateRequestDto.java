@@ -1,4 +1,4 @@
-package com.example.demo.dto;
+package com.example.demo.web.dto;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -6,16 +6,14 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class PostSaveRequestDto {
+public class PostUpdateRequestDto {
 
     private String title;
-    private String author;
     private String content;
 
     @Builder
-    public PostSaveRequestDto(String title, String author, String content) {
+    public PostUpdateRequestDto(String title, String content) {
         this.title = title;
-        this.author = author;
         this.content = content;
     }
 }

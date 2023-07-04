@@ -1,7 +1,7 @@
 package com.example.demo.domain;
 
-import com.example.demo.dto.PostSaveRequestDto;
-import com.example.demo.dto.PostUpdateRequestDto;
+import com.example.demo.web.dto.PostSaveRequestDto;
+import com.example.demo.web.dto.PostUpdateRequestDto;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
