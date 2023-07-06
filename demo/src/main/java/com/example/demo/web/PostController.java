@@ -50,10 +50,17 @@ public class PostController {
 
     @PatchMapping("/{id}")
     public ResponseEntity<String> update(@PathVariable Long id, @RequestBody PostUpdateRequestDto requestDto) {
-        postService.update(id, requestDto);
+        String updatePost = postService.update(id, requestDto);
 
         log.info("update : {}", requestDto);
 
-        return ResponseEntity.ok().body("변경 완료");
+        return ResponseEntity.ok().body(updatePost);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> delete(@PathVariable Long id) {
+        String deletePost = postService.delete(id);
+
+        return ResponseEntity.ok().body(deletePost);
     }
 }

@@ -44,4 +44,9 @@ public class PostService {
 
         return "수정 완료";
     }
+
+    public String delete(Long id) {
+        postRepository.delete(id);
+        return "삭제 완료";
+    }
 }

@@ -41,4 +41,8 @@ public class PostRepository {
 
         return findPost;
     }
+
+    public void delete(Long id) {
+        store.remove(id);
+    }
 }
