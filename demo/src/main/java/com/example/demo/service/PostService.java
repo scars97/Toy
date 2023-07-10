@@ -9,6 +9,7 @@ import com.example.demo.web.dto.PostUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,6 +38,12 @@ public class PostService {
         return postRepository.findAll().stream()
                 .map(posts -> new PostListResponseDto(posts))
                 .collect(Collectors.toList());
+
+/*        List<PostListResponseDto> postList = new ArrayList<>();
+        for (Post result : postRepository.findAll()) {
+            postList.add(new PostListResponseDto(result));
+        }
+        return postList;*/
     }
 
     public String update(Long id, PostUpdateRequestDto requestDto) {

@@ -4,10 +4,7 @@ import com.example.demo.web.dto.PostSaveRequestDto;
 import com.example.demo.web.dto.PostUpdateRequestDto;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Repository
 public class PostRepository {
@@ -34,7 +31,7 @@ public class PostRepository {
         return new ArrayList<>(store.values());
     }
 
-    public Post update(Long id, PostUpdateRequestDto updateDto){
+    public Post update(Long id, PostUpdateRequestDto updateDto) {
         Post findPost = findById(id);
 
         findPost.update(updateDto.getTitle(), updateDto.getContent());

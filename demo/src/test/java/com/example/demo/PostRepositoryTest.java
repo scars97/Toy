@@ -71,9 +71,9 @@ public class PostRepositoryTest {
         postRepository.save(post2);
 
         //when
-        List<Post> posts = postRepository.findAll();
+        //List<Post> posts = postRepository.findAll();
         List<PostListResponseDto> postList = new ArrayList<>();
-        for (Post result : posts) {
+        for (Post result : postRepository.findAll()) {
             postList.add(new PostListResponseDto(result));
         }
 
