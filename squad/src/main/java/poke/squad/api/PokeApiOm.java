@@ -2,6 +2,7 @@ package poke.squad.api;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -40,7 +41,7 @@ public class PokeApiOm {
         String jsonStr = result.getBody();
 
         //Json -> Java 역직렬화
-        com.fasterxml.jackson.databind.ObjectMapper objectMapper = new com.fasterxml.jackson.databind.ObjectMapper();
+        ObjectMapper objectMapper = new ObjectMapper();
         //joinStr 필드 값 읽어오기
         JsonNode root = objectMapper.readTree(jsonStr);
 

@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import poke.squad.api.PokeApiOm;
 import poke.squad.api.PokeApiJo;
+import poke.squad.api.PokeEncyclopedia;
+import poke.squad.domain.PokeListDto;
 import poke.squad.domain.PokemonDto;
 
 @Slf4j
@@ -20,6 +22,7 @@ public class PokeController {
 
     private final PokeApiJo jo;
     private final PokeApiOm om;
+    private final PokeEncyclopedia pokeEncyclopedia;
 
     @GetMapping("/json/{name}")
     public ResponseEntity<PokemonDto> useJsonObject(@PathVariable String name) {
@@ -37,5 +40,14 @@ public class PokeController {
         log.info("poke={}", poke);
 
         return ResponseEntity.ok().body(poke);
+    }
+
+    @GetMapping("/list/{number}")
+    public ResponseEntity<PokeListDto> allPoke(@PathVariable int number) throws JsonProcessingException {
+        PokeListDto all = pokeEncyclopedia.findAll(number);
+
+        log.info("all={}", all);
+
+        return ResponseEntity.ok().body(all);
     }
 }
