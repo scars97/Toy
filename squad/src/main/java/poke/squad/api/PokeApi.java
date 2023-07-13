@@ -1,12 +1,8 @@
 package poke.squad.api;
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.RequiredArgsConstructor;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.springframework.http.RequestEntity;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -20,8 +16,6 @@ import java.util.List;
 public class PokeApi {
 
     private static final String API_BASE_URL = "https://pokeapi.co/api/v2/";
-    private RestTemplate restTemplate = new RestTemplate();
-
 
     public Pokemon getPokemonByName(String name) {
 
@@ -34,11 +28,13 @@ public class PokeApi {
 
         RequestEntity<Void> req = RequestEntity
                 .get(uri)
+                .header("User-Agent", "Your-User-Agent-String")
                 .build();
 
-        ResponseEntity<JSONObject> result = restTemplate.exchange(req, JSONObject.class);
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> result = restTemplate.exchange(req, String.class);
 
-        JSONObject json = result.getBody();
+        JSONObject json = new JSONObject(result.getBody());
 
         Long pokeId = Long.valueOf(json.getInt("id"));
         String pokeName = json.getString("name");
