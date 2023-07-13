@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class PokeApi {
+public class PokeApiJo {
 
     private static final String API_BASE_URL = "https://pokeapi.co/api/v2/";
 

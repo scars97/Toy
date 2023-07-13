@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import poke.squad.api.ApiObjectMapper;
-import poke.squad.api.PokeApi;
+import poke.squad.api.PokeApiOm;
+import poke.squad.api.PokeApiJo;
 import poke.squad.domain.PokemonDto;
 
 @Slf4j
@@ -18,12 +18,12 @@ import poke.squad.domain.PokemonDto;
 @RequestMapping("/poke")
 public class PokeController {
 
-    private final PokeApi pokeApi;
-    private final ApiObjectMapper apiObjectMapper;
+    private final PokeApiJo jo;
+    private final PokeApiOm om;
 
     @GetMapping("/json/{name}")
     public ResponseEntity<PokemonDto> useJsonObject(@PathVariable String name) {
-        PokemonDto poke = pokeApi.getPokemonByName(name);
+        PokemonDto poke = jo.getPokemonByName(name);
 
         log.info("poke={}", poke);
 
@@ -32,7 +32,7 @@ public class PokeController {
 
     @GetMapping("/om/{name}")
     public ResponseEntity<PokemonDto> useObjectMapper(@PathVariable String name) throws JsonProcessingException {
-        PokemonDto poke = apiObjectMapper.getPokemonByName(name);
+        PokemonDto poke = om.getPokemonByName(name);
 
         log.info("poke={}", poke);
 
