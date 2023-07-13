@@ -1,8 +1,11 @@
 package poke.squad.api;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.springframework.http.*;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -13,11 +16,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class PokeApi {
+public class ApiObjectMapper {
 
     private static final String API_BASE_URL = "https://pokeapi.co/api/v2/";
 
-    public PokemonDto getPokemonByName(String name) {
+    public PokemonDto getPokemonByName(String name) throws JsonProcessingException {
 
         URI uri = UriComponentsBuilder
                 .fromHttpUrl(API_BASE_URL)
@@ -34,25 +37,26 @@ public class PokeApi {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> result = restTemplate.exchange(req, String.class);
 
-        JSONObject json = new JSONObject(result.getBody());
+        String jsonStr = result.getBody();
 
-        Long pokeId = Long.valueOf(json.getInt("id"));
-        String pokeName = json.getString("name");
-        JSONArray types = json.getJSONArray("types");
+        ObjectMapper objectMapper = new ObjectMapper();
 
-        List<String> typeNames = new ArrayList<>();
-        for (int i = 0; i < types.length(); i++) {
-            JSONObject bigType = types.getJSONObject(i);
-            JSONObject smallType = bigType.getJSONObject("type");
-            String typeName = smallType.getString("name");
+        JsonNode root = objectMapper.readTree(jsonStr);
 
-            typeNames.add(typeName);
+        long pokeId = root.get("id").asLong();
+        String pokeName = root.get("name").asText();
+        
+        JsonNode typesNode = root.get("types");
+        List<String> types = new ArrayList<>();
+        for (JsonNode typeNode : typesNode) {
+            String typeName = typeNode.get("type").get("name").asText();
+            types.add(typeName);
         }
 
         return PokemonDto.builder()
                 .id(pokeId)
                 .name(pokeName)
-                .types(typeNames)
+                .types(types)
                 .build();
     }
 }
