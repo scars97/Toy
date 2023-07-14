@@ -10,16 +10,12 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @ToString
-public class PokeListDto {
+public class PokeNameListDto {
 
-    private String next;
-    private String previous;
     private List<String> pokemons;
 
     @Builder
-    public PokeListDto(String next, String previous, List<String> pokemons) {
-        this.next = next;
-        this.previous = previous;
+    public PokeNameListDto(List<String> pokemons) {
         this.pokemons = pokemons;
     }
 }

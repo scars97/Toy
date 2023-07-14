@@ -6,7 +6,7 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
-import poke.squad.domain.PokemonDto;
+import poke.squad.domain.PokeInfoDto;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ public class PokeApiJo {
 
     private static final String API_BASE_URL = "https://pokeapi.co/api/v2/";
 
-    public PokemonDto getPokemonByName(String name) {
+    public PokeInfoDto getPokemonByName(String name) {
 
         URI uri = UriComponentsBuilder
                 .fromHttpUrl(API_BASE_URL)
@@ -49,7 +49,7 @@ public class PokeApiJo {
             typeNames.add(typeName);
         }
 
-        return PokemonDto.builder()
+        return PokeInfoDto.builder()
                 .id(pokeId)
                 .name(pokeName)
                 .types(typeNames)
