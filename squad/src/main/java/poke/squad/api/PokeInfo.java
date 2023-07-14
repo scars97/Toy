@@ -54,10 +54,13 @@ public class PokeInfo {
             String typeName = typeNode.get("type").get("name").asText();
             types.add(typeName);
         }
+        JsonNode spritesNode = root.get("sprites");
+        String frontImg = spritesNode.get("front_default").asText();
 
         return PokeInfoDto.builder()
                 .id(pokeId)
                 .name(pokeName)
+                .img(frontImg)
                 .types(types)
                 .build();
     }
