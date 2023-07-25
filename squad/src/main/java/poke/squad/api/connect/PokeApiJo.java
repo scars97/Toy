@@ -1,4 +1,4 @@
-package poke.squad.api;
+package poke.squad.api.connect;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
