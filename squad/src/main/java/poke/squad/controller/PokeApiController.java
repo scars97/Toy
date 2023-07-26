@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import poke.squad.api.connect.PokeInfo;
 import poke.squad.api.connect.PokeApiJo;
+import poke.squad.api.process.PokeInfoResult;
 import poke.squad.domain.PokeNameListDto;
 import poke.squad.domain.PokeInfoDto;
 
@@ -23,7 +24,7 @@ import java.util.List;
 public class PokeApiController {
 
     private final PokeApiJo jo;
-    private final PokeInfo pokeInfo;
+    private final PokeInfoResult pokeInfoResult;
 
     @GetMapping("/json/{name}")
     public ResponseEntity<PokeInfoDto> useJsonObject(@PathVariable String name) {
@@ -36,7 +37,7 @@ public class PokeApiController {
 
     @GetMapping("/info/{name}")
     public ResponseEntity<PokeInfoDto> findOne(@PathVariable String name) throws JsonProcessingException {
-        PokeInfoDto poke = pokeInfo.getPokeInfo(name);
+        PokeInfoDto poke = pokeInfoResult.findOne(name);
 
         log.info("poke={}", poke);
 
@@ -45,11 +46,11 @@ public class PokeApiController {
 
     @GetMapping("/list/{number}")
     public ResponseEntity<List<PokeInfoDto>> findAll(@PathVariable int number) throws JsonProcessingException {
-        PokeNameListDto all = pokeInfo.findAll(number);
+        PokeNameListDto all = pokeInfoResult.findAll(number);
 
         List<PokeInfoDto> pokes = new ArrayList<>();
         for (int i = 0; i < all.getPokemons().size(); i++) {
-            PokeInfoDto poke = pokeInfo.getPokeInfo(all.getPokemons().get(i));
+            PokeInfoDto poke = pokeInfoResult.findOne(all.getPokemons().get(i));
             pokes.add(poke);
         }
 
