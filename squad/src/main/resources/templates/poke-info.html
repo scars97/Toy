@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <ul>
+        <li>
+            번호 : [[${pokeInfo.id}]]
+        </li>
+        <li>
+            이름 : [[${pokeInfo.name}]]
+        </li>
+        <li>
+            타입 : [[${pokeInfo.types}]]
+        </li>
+    </ul>
+    <img th:field="*{pokeInfo.img}" th:src="${pokeInfo.img}">
+</body>
+</html>

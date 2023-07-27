@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <form th:action="@{/poke/search}" method="post">
+    이름 : <input type="text" id="pokeName" name="pokeName" placeholder="포켓몬 이름을 입력하세요.">
+    <input type="submit"/>
+  </form>
+</body>
+</html>
