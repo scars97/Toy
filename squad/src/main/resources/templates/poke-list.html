@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>List</title>
+</head>
+<body>
+  <ul>
+    <li th:each="list : ${pokeList}">
+      <a th:href="@{|/poke/info/${list}|}" th:text="${list}">포켓몬 이름</a>
+    </li>
+  </ul>
+</body>
+</html>
