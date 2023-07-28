@@ -47,15 +47,9 @@ public class PokeController {
 
     @GetMapping("/list/{num}")
     public String findAll(@PathVariable int num, Model model) throws JsonProcessingException {
-        PokeNameListDto all = pokeService.findAll(num);
+        List<String> pokeNameList = pokeService.findAll(num);
 
-        List<String> pokes = new ArrayList<>();
-        for (int i = 0; i < all.getPokemons().size(); i++) {
-            String poke = pokeService.findOne(all.getPokemons().get(i)).getName();
-            pokes.add(poke);
-        }
-
-        model.addAttribute("pokeList", pokes);
+        model.addAttribute("pokeList", pokeNameList);
         return "poke-list";
     }
 }

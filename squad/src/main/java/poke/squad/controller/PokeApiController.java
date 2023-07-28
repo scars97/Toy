@@ -45,15 +45,9 @@ public class PokeApiController {
     }
 
     @GetMapping("/list/{number}")
-    public ResponseEntity<List<PokeInfoDto>> findAll(@PathVariable int number) throws JsonProcessingException {
-        PokeNameListDto all = pokeService.findAll(number);
+    public ResponseEntity<List<String>> findAll(@PathVariable int number) throws JsonProcessingException {
+        List<String> pokeNameList = pokeService.findAll(number);
 
-        List<PokeInfoDto> pokes = new ArrayList<>();
-        for (int i = 0; i < all.getPokemons().size(); i++) {
-            PokeInfoDto poke = pokeService.findOne(all.getPokemons().get(i));
-            pokes.add(poke);
-        }
-
-        return ResponseEntity.ok().body(pokes);
+        return ResponseEntity.ok().body(pokeNameList);
     }
 }
