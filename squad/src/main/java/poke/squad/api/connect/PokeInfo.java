@@ -1,6 +1,5 @@
 package poke.squad.api.connect;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -13,10 +12,11 @@ import java.net.URI;
 public class PokeInfo {
 
     private static final String API_BASE_URL = "https://pokeapi.co/api/v2/";
+    // 한글 이름 -> /pokemon-species/1/
     private int limit;
     private int offset;
 
-    public String getPokeInfo(String name) throws JsonProcessingException {
+    public String getPokeInfo(String name) {
 
         //Http 통신
         URI uri = UriComponentsBuilder
@@ -37,9 +37,9 @@ public class PokeInfo {
         return result.getBody();
     }
 
-    public String getPokeList(int number) throws JsonProcessingException {
+    public String getPokeList(int number) {
 
-        limit = 50;
+        limit = 10;
 
         offset = limit * (number - 1);
 

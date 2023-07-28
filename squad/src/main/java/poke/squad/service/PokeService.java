@@ -20,15 +20,22 @@ public class PokeService {
         return pokeInfoResult.findOne(name);
     }
 
-    public List<String> findAll(int number) throws JsonProcessingException {
+    public List<PokeInfoDto> findAll(int number) throws JsonProcessingException {
         PokeNameListDto all = pokeInfoResult.findAll(number);
 
-        List<String> pokeNames = new ArrayList<>();
+        List<PokeInfoDto> pokeList = new ArrayList<>();
         for (int i = 0; i < all.getPokemons().size(); i++) {
-            String poke = findOne(all.getPokemons().get(i)).getName();
-            pokeNames.add(poke);
+            Long pokeId = findOne(all.getPokemons().get(i)).getId();
+            String pokeName = findOne(all.getPokemons().get(i)).getName();
+            String pokeImg = findOne(all.getPokemons().get(i)).getImg();
+            PokeInfoDto pokeInfoDto = PokeInfoDto.builder()
+                    .id(pokeId)
+                    .name(pokeName)
+                    .img(pokeImg)
+                    .build();
+            pokeList.add(pokeInfoDto);
         }
 
-        return pokeNames;
+        return pokeList;
     }
 }

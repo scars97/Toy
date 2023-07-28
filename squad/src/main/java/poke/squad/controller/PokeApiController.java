@@ -9,12 +9,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import poke.squad.api.connect.PokeApiJo;
-import poke.squad.api.process.PokeInfoResult;
-import poke.squad.domain.PokeNameListDto;
 import poke.squad.domain.PokeInfoDto;
 import poke.squad.service.PokeService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -45,9 +42,9 @@ public class PokeApiController {
     }
 
     @GetMapping("/list/{number}")
-    public ResponseEntity<List<String>> findAll(@PathVariable int number) throws JsonProcessingException {
-        List<String> pokeNameList = pokeService.findAll(number);
+    public ResponseEntity<List<PokeInfoDto>> findAll(@PathVariable int number) throws JsonProcessingException {
+        List<PokeInfoDto> pokeList = pokeService.findAll(number);
 
-        return ResponseEntity.ok().body(pokeNameList);
+        return ResponseEntity.ok().body(pokeList);
     }
 }

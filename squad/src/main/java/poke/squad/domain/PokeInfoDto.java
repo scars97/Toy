@@ -21,4 +21,11 @@ public class PokeInfoDto {
         this.img = img;
         this.types = types;
     }
+
+    @Builder
+    public PokeInfoDto(Long id, String name, String img) {
+        this.id = id;
+        this.name = name;
+        this.img = img;
+    }
 }

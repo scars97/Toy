@@ -8,10 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import poke.squad.domain.PokeInfoDto;
-import poke.squad.domain.PokeNameListDto;
 import poke.squad.service.PokeService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -47,7 +45,7 @@ public class PokeController {
 
     @GetMapping("/list/{num}")
     public String findAll(@PathVariable int num, Model model) throws JsonProcessingException {
-        List<String> pokeNameList = pokeService.findAll(num);
+        List<PokeInfoDto> pokeNameList = pokeService.findAll(num);
 
         model.addAttribute("pokeList", pokeNameList);
         return "poke-list";
