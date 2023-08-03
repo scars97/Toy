@@ -78,4 +78,13 @@ public class PostController {
         log.info("result={}", result);
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
+
+    @PostMapping("/cookieoven-test")
+    public ResponseEntity<String> cookieOvenTest(@RequestBody String result) {
+        log.info("result={}", result);
+
+        //result 값 저장 -> 비즈니스 로직 필요
+        //GetMapping 메서드를 만들어서 저장된 값 꺼내기
+        return ResponseEntity.ok().body("저장 완료");
+    }
 }

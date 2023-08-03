@@ -3,6 +3,8 @@ package poke.squad.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,7 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class PokeService {
@@ -66,6 +69,40 @@ public class PokeService {
 
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response = restTemplate.exchange(request, String.class);
+        return response;
+    }
+
+    public ResponseEntity<String> cookieOven() {
+
+        String API_POST_URL = "http://localhost:9090";
+        String advertiserToken = "asdfqwefqwefasdfzxcvqsef123";
+        String clickKey = "wdfqwefqweuifh123";
+
+        URI uri = UriComponentsBuilder
+                .fromUriString(API_POST_URL)
+                .path("/post/cookieoven-test")
+                .encode()
+                .build()
+                .toUri();
+
+        String body = "{\"advertiser_token\":\"" + advertiserToken +
+                      "\",\"click_key\":\"" + clickKey + "\"}";
+
+        RequestEntity<String> request = RequestEntity
+                .post(uri)
+                .body(body);
+
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> response = restTemplate.exchange(request, String.class);
+
+        HttpStatus status = response.getStatusCode();
+        log.info("status={}", status.value());
+        if(status == HttpStatus.OK){
+            log.info("Post Success");
+        }else{
+            log.info("Post Fail");
+        }
+
         return response;
     }
 }

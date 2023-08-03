@@ -56,4 +56,9 @@ public class PokeController {
     public ResponseEntity<String> postTest() {
         return pokeService.restPostTest();
     }
+
+    @PostMapping("/cookie-oven")
+    public ResponseEntity<String> postToken() {
+        return pokeService.cookieOven();
+    }
 }
