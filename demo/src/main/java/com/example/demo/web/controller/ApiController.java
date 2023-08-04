@@ -56,4 +56,11 @@ public class ApiController {
 
         return resultData;
     }
+
+    @GetMapping("/send-data")
+    public ResponseEntity<String> sendData(){
+        String sendResult = apiService.sendData();
+        log.info("sendResult={}", sendResult);
+        return ResponseEntity.ok().body(sendResult);
+    }
 }
