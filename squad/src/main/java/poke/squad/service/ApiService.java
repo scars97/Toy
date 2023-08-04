@@ -1,6 +1,7 @@
 package poke.squad.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.servlet.http.HttpSession;
 import java.net.URI;
 
 @Slf4j
@@ -38,28 +40,31 @@ public class ApiService {
         return response;
     }
 
-    public ResponseEntity<String> cookieOven() {
+    public String cookieOven(String clickKey) {
 
         String API_POST_URL = "http://localhost:9090";
         String advertiserToken = "asdfqwefqwefasdfzxcvqsef123";
-        String clickKey = "wdfqwefqweuifh123";
-
+        
         URI uri = UriComponentsBuilder
                 .fromUriString(API_POST_URL)
-                .path("/post/cookieoven-test")
+                .path("/cookieoven-test")
+                .queryParam("advertiser_token", advertiserToken)
+                .queryParam("click_key", clickKey)
                 .encode()
                 .build()
                 .toUri();
 
+
+        /* body 에 값 넣어서 보내는 로직
         String body = "{\"advertiser_token\":\"" + advertiserToken +
                 "\",\"click_key\":\"" + clickKey + "\"}";
-
         RequestEntity<String> request = RequestEntity
                 .post(uri)
                 .body(body);
+         */
 
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> response = restTemplate.exchange(request, String.class);
+        ResponseEntity<String> response = restTemplate.postForEntity(uri, "{}", String.class);
 
         HttpStatus status = response.getStatusCode();
         log.info("status={}", status.value());
@@ -69,6 +74,6 @@ public class ApiService {
             log.info("Post Fail");
         }
 
-        return response;
+        return "{}";
     }
 }

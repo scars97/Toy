@@ -11,11 +11,11 @@ public class ApiRepository {
     private static final Map<Long, ApiDataDto> apiStore = new HashMap<>();
     private static long apiSequence = 0L;
 
-    public ApiDataDto apiSave(Map<String, Object> apiData) {
+    public ApiDataDto apiSave(String token, String clickKey) {
         ApiDataDto resultData = ApiDataDto.builder()
                 .id(++apiSequence)
-                .advertiserToken((String) apiData.get("advertiser_token"))
-                .clickKey((String) apiData.get("click_key"))
+                .advertiserToken(token)
+                .clickKey(clickKey)
                 .build();
         apiStore.put(resultData.getId(), resultData);
         return resultData;

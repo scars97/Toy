@@ -8,10 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -38,12 +35,17 @@ public class ApiController {
     }
 
     @PostMapping("/cookieoven-test")
-    public String cookieOvenTest(@RequestBody String result, HttpServletRequest request) throws JsonProcessingException {
+    public String cookieOvenTest(@RequestBody String result,
+                                 @RequestParam("advertiser_token") String token,
+                                 @RequestParam("click_key") String clickKey,
+                                 HttpServletRequest request) throws JsonProcessingException {
         String clientIp = request.getRemoteAddr();
         log.info("clientIp={}", clientIp);
         log.info("result={}", result);
+        log.info("token={}", token);
+        log.info("clickKey={}", clickKey);
 
-        String resultData = apiService.apiDataSave(result);
+        String resultData = apiService.apiDataSave(token, clickKey);
 
         return resultData;
     }
@@ -61,6 +63,6 @@ public class ApiController {
     public ResponseEntity<String> sendData(){
         String sendResult = apiService.sendData();
         log.info("sendResult={}", sendResult);
-        return ResponseEntity.ok().body(sendResult);
+        return ResponseEntity.ok().body(sendResult + " 보냄");
     }
 }
