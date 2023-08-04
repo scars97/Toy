@@ -1,4 +1,4 @@
-package poke.squad.controller;
+package poke.squad.controller.poke;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
@@ -50,15 +50,5 @@ public class PokeController {
 
         model.addAttribute("pokeList", pokeNameList);
         return "poke-list";
-    }
-
-    @PostMapping("/test")
-    public ResponseEntity<String> postTest() {
-        return pokeService.restPostTest();
-    }
-
-    @PostMapping("/cookie-oven")
-    public ResponseEntity<String> postToken() {
-        return pokeService.cookieOven();
     }
 }

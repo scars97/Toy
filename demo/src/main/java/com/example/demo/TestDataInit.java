@@ -1,8 +1,7 @@
 package com.example.demo;
 
-import com.example.demo.domain.PostRepository;
-import com.example.demo.service.PostService;
-import com.example.demo.web.dto.PostSaveRequestDto;
+import com.example.demo.domain.post.PostRepository;
+import com.example.demo.web.dto.postdto.PostSaveRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

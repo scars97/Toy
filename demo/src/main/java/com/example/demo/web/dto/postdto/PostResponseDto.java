@@ -1,6 +1,6 @@
-package com.example.demo.web.dto;
+package com.example.demo.web.dto.postdto;
 
-import com.example.demo.domain.Post;
+import com.example.demo.domain.post.Post;
 import lombok.Getter;
 import lombok.ToString;
 

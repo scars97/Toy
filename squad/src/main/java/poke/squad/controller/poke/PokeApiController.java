@@ -1,4 +1,4 @@
-package poke.squad.controller;
+package poke.squad.controller.poke;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;

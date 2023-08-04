@@ -1,23 +1,19 @@
-package com.example.demo.web.dto;
+package com.example.demo.web.dto.postdto;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Getter
 @NoArgsConstructor
-@ToString
-public class PostSaveRequestDto {
+public class PostUpdateRequestDto {
 
     private String title;
-    private String author;
     private String content;
 
     @Builder
-    public PostSaveRequestDto(String title, String author, String content) {
+    public PostUpdateRequestDto(String title, String content) {
         this.title = title;
-        this.author = author;
         this.content = content;
     }
 }

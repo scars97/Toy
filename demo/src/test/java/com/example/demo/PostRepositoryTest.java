@@ -1,11 +1,11 @@
 package com.example.demo;
 
-import com.example.demo.domain.Post;
-import com.example.demo.domain.PostRepository;
-import com.example.demo.web.dto.PostListResponseDto;
-import com.example.demo.web.dto.PostResponseDto;
-import com.example.demo.web.dto.PostSaveRequestDto;
-import com.example.demo.web.dto.PostUpdateRequestDto;
+import com.example.demo.domain.post.Post;
+import com.example.demo.domain.post.PostRepository;
+import com.example.demo.web.dto.postdto.PostListResponseDto;
+import com.example.demo.web.dto.postdto.PostResponseDto;
+import com.example.demo.web.dto.postdto.PostSaveRequestDto;
+import com.example.demo.web.dto.postdto.PostUpdateRequestDto;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
