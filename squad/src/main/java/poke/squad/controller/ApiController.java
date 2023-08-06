@@ -26,19 +26,27 @@ public class ApiController {
         return apiService.restPostTest();
     }
 
+    //전달 받은 click_key
     @GetMapping("/cookie-oven")
     public ResponseEntity<String> getData(HttpServletRequest request
                                           /*,@RequestParam("click_key") String clickKey*/) {
+        //파라미터로 받은 click_key
         String clickKey = ServletRequestUtils.getStringParameter(request, "click_key", "");
         log.info("clickKey={}", clickKey);
 
-//        request.getSession().setAttribute("click_key", clickKey);
+        //key 저장
+        String result = apiService.saveClickKey(clickKey);
+        log.info("result={}", result);
 
-        return ResponseEntity.ok().body(clickKey);
+        return ResponseEntity.ok().body(result);
     }
 
-//    @PostMapping("/cookie-oven")
-//    public ResponseEntity<String> postData() {
-//        return apiService.cookieOven();
-//    }
+    @PostMapping("/cookie-oven")
+    public ResponseEntity<String> postData() {
+        String key = apiService.findKey();
+        log.info("key={}", key);
+        String postResult = apiService.cookieOven(key);
+
+        return ResponseEntity.ok().body(postResult);
+    }
 }

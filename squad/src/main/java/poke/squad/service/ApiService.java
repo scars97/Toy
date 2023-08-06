@@ -9,10 +9,14 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 @Service
 public class ApiService {
+
+    private static final Map<String, String> keyStore = new HashMap<>();
 
     public ResponseEntity<String> restPostTest() {
         URI uri = UriComponentsBuilder
@@ -38,11 +42,22 @@ public class ApiService {
         return response;
     }
 
+    //click_key 저장
+    public String saveClickKey(String clickKey) {
+        keyStore.put("key", clickKey);
+        return "저장 완료";
+    }
+
+    //click_key 값 찾기
+    public String findKey() {
+        return keyStore.get("key");
+    }
+
     public String cookieOven(String clickKey) {
 
         String API_POST_URL = "http://localhost:9090";
         String advertiserToken = "asdfqwefqwefasdfzxcvqsef123";
-        
+
         URI uri = UriComponentsBuilder
                 .fromUriString(API_POST_URL)
                 .path("/cookieoven-test")
@@ -52,17 +67,12 @@ public class ApiService {
                 .build()
                 .toUri();
 
-
-        /* body 에 값 넣어서 보내는 로직
         String body = "{\"advertiser_token\":\"" + advertiserToken +
                 "\",\"click_key\":\"" + clickKey + "\"}";
-        RequestEntity<String> request = RequestEntity
-                .post(uri)
-                .body(body);
-         */
 
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> response = restTemplate.postForEntity(uri, "{}", String.class);
+        //쿼리파라미터, 바디 값 전송
+        ResponseEntity<String> response = restTemplate.postForEntity(uri, body, String.class);
 
         HttpStatus status = response.getStatusCode();
         log.info("status={}", status.value());
@@ -72,6 +82,7 @@ public class ApiService {
             log.info("Post Fail");
         }
 
-        return "{}";
+        //token,key 전송 후 리턴받는 값
+        return response.getBody();
     }
 }

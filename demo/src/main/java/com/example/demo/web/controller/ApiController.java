@@ -34,8 +34,17 @@ public class ApiController {
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
+    //click_key 전달
+    @GetMapping("/send-data")
+    public ResponseEntity<String> sendData(){
+        String sendResult = apiService.sendData();
+        log.info("sendResult={}", sendResult);
+        return ResponseEntity.ok().body(sendResult);
+    }
+
+    //token, key 처리
     @PostMapping("/cookieoven-test")
-    public String cookieOvenTest(@RequestBody String result,
+    public ResponseEntity<String> cookieOvenTest(@RequestBody String result,
                                  @RequestParam("advertiser_token") String token,
                                  @RequestParam("click_key") String clickKey,
                                  HttpServletRequest request) throws JsonProcessingException {
@@ -46,23 +55,18 @@ public class ApiController {
         log.info("clickKey={}", clickKey);
 
         String resultData = apiService.apiDataSave(token, clickKey);
+        log.info("resultData={}", resultData);
 
-        return resultData;
+        return ResponseEntity.ok().body(resultData);
     }
 
+    //전달받은 click_key 값 find
     @GetMapping("/cookieoven-test/{id}")
-    public ApiDataDto findByApiData(@PathVariable Long id) {
+    public ResponseEntity<ApiDataDto> findByApiData(@PathVariable Long id) {
         ApiDataDto resultData = apiService.findByApiData(id);
 
         log.info("resultData={}", resultData);
 
-        return resultData;
-    }
-
-    @GetMapping("/send-data")
-    public ResponseEntity<String> sendData(){
-        String sendResult = apiService.sendData();
-        log.info("sendResult={}", sendResult);
-        return ResponseEntity.ok().body(sendResult + " 보냄");
+        return ResponseEntity.ok().body(resultData);
     }
 }
