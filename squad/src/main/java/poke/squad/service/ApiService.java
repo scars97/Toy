@@ -43,7 +43,7 @@ public class ApiService {
     }
 
     //click_key 저장
-    public String saveClickKey(String clickKey) {
+    public String saveKey(String clickKey) {
         keyStore.put("key", clickKey);
         return "저장 완료";
     }
@@ -53,7 +53,7 @@ public class ApiService {
         return keyStore.get("key");
     }
 
-    public String cookieOven(String clickKey) {
+    public String postTokenAndKey(String clickKey) {
 
         String API_POST_URL = "http://localhost:9090";
         String advertiserToken = "asdfqwefqwefasdfzxcvqsef123";

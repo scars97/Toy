@@ -49,13 +49,13 @@ public class ApiService {
     }
 
     //api 연동 예제 데이터 저장
-    public String apiDataSave(String token, String clickKey) throws JsonProcessingException {
+    public String saveTokenAndKey(String token, String clickKey) throws JsonProcessingException {
         /*
         ObjectMapper mapper = new ObjectMapper();
         Map<String, Object> apiData = mapper.readValue(result, HashMap.class);
         */
 
-        ApiDataDto apiDataDto = apiRepository.apiSave(token, clickKey);
+        ApiDataDto apiDataDto = apiRepository.saveTokenAndKey(token, clickKey);
         if (apiDataDto == null) {
             throw new IllegalArgumentException("저장 오류");
         }
@@ -63,8 +63,8 @@ public class ApiService {
     }
 
     //저장된 api 데이터 가져오기
-    public ApiDataDto findByApiData(Long id) {
-        ApiDataDto findOne = apiRepository.findByApiId(id);
+    public ApiDataDto findById(Long id) {
+        ApiDataDto findOne = apiRepository.findById(id);
         if (findOne == null) {
             throw new IllegalArgumentException("해당 api 데이터 없음");
         }

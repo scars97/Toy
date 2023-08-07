@@ -11,7 +11,7 @@ public class ApiRepository {
     private static final Map<Long, ApiDataDto> apiStore = new HashMap<>();
     private static long apiSequence = 0L;
 
-    public ApiDataDto apiSave(String token, String clickKey) {
+    public ApiDataDto saveTokenAndKey(String token, String clickKey) {
         ApiDataDto resultData = ApiDataDto.builder()
                 .id(++apiSequence)
                 .advertiserToken(token)
@@ -21,7 +21,7 @@ public class ApiRepository {
         return resultData;
     }
 
-    public ApiDataDto findByApiId(Long id) {
+    public ApiDataDto findById(Long id) {
         return apiStore.get(id);
     }
 }
