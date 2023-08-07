@@ -52,7 +52,7 @@ public class ApiService {
     //click_key 저장
     public String saveKey(String clickKey) {
         keyStore.put("key", clickKey);
-        return "저장 완료";
+        return clickKey;
     }
 
     //click_key 값 찾기
@@ -90,6 +90,7 @@ public class ApiService {
 
     public String httpPostTokenAndKey(String clickKey) throws IOException {
         CloseableHttpClient httpClient = null;
+        String result = null;
         URI uri = postUri(clickKey);
 
         try {
@@ -99,13 +100,13 @@ public class ApiService {
 
             CloseableHttpResponse httpResponse = httpClient.execute(post);
 
-            return EntityUtils.toString(httpResponse.getEntity());
+            result = EntityUtils.toString(httpResponse.getEntity());
         } catch (IOException e){
             log.info("http 통신 오류");
         } finally {
             httpClient.close();
         }
-        return null;
+        return result;
     }
 
     private URI postUri(String clickKey) {

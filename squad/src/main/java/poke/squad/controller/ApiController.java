@@ -39,7 +39,7 @@ public class ApiController {
         String result = apiService.saveKey(clickKey);
         log.info("result={}", result);
 
-        return ResponseEntity.ok().body(result);
+        return ResponseEntity.ok().body(result + " 저장 완료");
     }
 
     @PostMapping("/cookie-oven")

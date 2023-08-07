@@ -26,6 +26,7 @@ import java.util.UUID;
 public class ApiService {
 
     private final ApiRepository apiRepository;
+    private String click_key;
 
     //api 연동 예제 데이터 전송
     public String sendData() {
@@ -40,6 +41,7 @@ public class ApiService {
 
     public String httpSendData() throws IOException {
         CloseableHttpClient httpClient = null;
+        String result = null;
         URI uri = getUri();
 
         try {
@@ -54,7 +56,7 @@ public class ApiService {
 
             CloseableHttpResponse httpResponse = httpClient.execute(get);
 
-            return EntityUtils.toString(httpResponse.getEntity());
+            result = EntityUtils.toString(httpResponse.getEntity());
 
         } catch (IOException e){
             log.info("http 통신 오류");
@@ -62,17 +64,18 @@ public class ApiService {
             httpClient.close();
         }
 
-        return null;
+        return result;
     }
 
     //api 연동 예제 데이터 저장
-    public String saveTokenAndKey(String token, String clickKey) throws JsonProcessingException {
-
-        ApiDataDto apiDataDto = apiRepository.saveTokenAndKey(token, clickKey);
-        if (apiDataDto == null) {
-            throw new IllegalArgumentException("저장 오류");
+    public String saveTokenAndKey(String token, String clickKey) {
+        if(clickKey.equals(click_key)){
+            log.info("전달한 click_key 값과 동일");
+            return apiRepository.saveTokenAndKey(token, clickKey);
+        } else {
+            log.info("clickKey={}", clickKey);
+            throw new IllegalArgumentException("전달한 click_key 값과 불일치");
         }
-        return "{}";
     }
 
     //저장된 api 데이터 가져오기
@@ -86,12 +89,12 @@ public class ApiService {
 
     private URI getUri() {
         String apiUrl = "http://localhost:8081";
-        String clickKey = UUID.randomUUID().toString();
+        click_key = UUID.randomUUID().toString();
 
         URI uri = UriComponentsBuilder
                 .fromUriString(apiUrl)
                 .path("/cookie-oven")
-                .queryParam("click_key", clickKey)
+                .queryParam("click_key", click_key)
                 .encode()
                 .build()
                 .toUri();
