@@ -6,12 +6,19 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.io.IOException;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,7 +32,7 @@ public class ApiService {
     private final ApiRepository apiRepository;
 
     //api 연동 예제 데이터 전송
-    public String sendData() {
+    public String sendData() throws IOException {
 
         String apiUrl = "http://localhost:8081";
         String clickKey = UUID.randomUUID().toString();
@@ -38,14 +45,25 @@ public class ApiService {
                 .build()
                 .toUri();
 
-//        RequestEntity<Void> request = RequestEntity
-//                .get(uri)
-//                .build();
+        CloseableHttpClient httpClient = HttpClientBuilder.create().build();
 
+        HttpGet get = new HttpGet(uri);
+
+        RequestConfig requestConfig = RequestConfig.custom()
+                .setConnectTimeout(2 * 1000)
+                .build();
+        get.setConfig(requestConfig);
+
+        CloseableHttpResponse httpResponse = httpClient.execute(get);
+        String responseStr = EntityUtils.toString(httpResponse.getEntity());
+
+        return responseStr;
+
+        /*
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response = restTemplate.getForEntity(uri, String.class);
 
-        return response.getBody();
+        return response.getBody();*/
     }
 
     //api 연동 예제 데이터 저장

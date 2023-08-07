@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 
 @Slf4j
 @Controller
@@ -36,7 +37,7 @@ public class ApiController {
 
     //click_key 전달
     @GetMapping("/send-data")
-    public ResponseEntity<String> sendKey(){
+    public ResponseEntity<String> sendKey() throws IOException {
         String sendResult = apiService.sendData();
         log.info("sendResult={}", sendResult);
         return ResponseEntity.ok().body(sendResult);
