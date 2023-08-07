@@ -38,7 +38,8 @@ public class ApiController {
     //click_key 전달
     @GetMapping("/send-data")
     public ResponseEntity<String> sendKey() throws IOException {
-        String sendResult = apiService.sendData();
+        //String sendResult = apiService.sendData();
+        String sendResult = apiService.httpSendData();
         log.info("sendResult={}", sendResult);
         return ResponseEntity.ok().body(sendResult);
     }
