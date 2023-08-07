@@ -13,6 +13,7 @@ import poke.squad.service.ApiService;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 
 @Slf4j
 @Controller
@@ -42,10 +43,11 @@ public class ApiController {
     }
 
     @PostMapping("/cookie-oven")
-    public ResponseEntity<String> postTokenAndKey() {
+    public ResponseEntity<String> postTokenAndKey() throws IOException {
         String key = apiService.findKey();
         log.info("key={}", key);
-        String postResult = apiService.postTokenAndKey(key);
+        //String postResult = apiService.postTokenAndKey(key);
+        String postResult = apiService.httpPostTokenAndKey(key);
 
         return ResponseEntity.ok().body(postResult);
     }

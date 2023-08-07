@@ -46,13 +46,13 @@ public class ApiController {
 
     //token, key 처리
     @PostMapping("/cookieoven-test")
-    public ResponseEntity<String> processTokenAndKey(@RequestBody String result,
+    public ResponseEntity<String> processTokenAndKey(/*@RequestBody String result,*/
                                  @RequestParam("advertiser_token") String token,
                                  @RequestParam("click_key") String clickKey,
                                  HttpServletRequest request) throws JsonProcessingException {
         String clientIp = request.getRemoteAddr();
         log.info("clientIp={}", clientIp);
-        log.info("result={}", result);
+        //log.info("result={}", result);
         log.info("token={}", token);
         log.info("clickKey={}", clickKey);
 

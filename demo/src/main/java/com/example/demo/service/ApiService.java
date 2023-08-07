@@ -39,20 +39,30 @@ public class ApiService {
     }
 
     public String httpSendData() throws IOException {
+        CloseableHttpClient httpClient = null;
         URI uri = getUri();
 
-        CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+        try {
+            httpClient = HttpClientBuilder.create().build();
 
-        HttpGet get = new HttpGet(uri);
+            HttpGet get = new HttpGet(uri);
 
-        RequestConfig requestConfig = RequestConfig.custom()
-                .setConnectTimeout(2 * 1000)
-                .build();
-        get.setConfig(requestConfig);
+            RequestConfig requestConfig = RequestConfig.custom()
+                    .setConnectTimeout(2 * 1000)
+                    .build();
+            get.setConfig(requestConfig);
 
-        CloseableHttpResponse httpResponse = httpClient.execute(get);
+            CloseableHttpResponse httpResponse = httpClient.execute(get);
 
-        return EntityUtils.toString(httpResponse.getEntity());
+            return EntityUtils.toString(httpResponse.getEntity());
+
+        } catch (IOException e){
+            log.info("http 통신 오류");
+        } finally {
+            httpClient.close();
+        }
+
+        return null;
     }
 
     //api 연동 예제 데이터 저장
