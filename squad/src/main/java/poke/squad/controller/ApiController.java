@@ -2,21 +2,18 @@ package poke.squad.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import poke.squad.service.ApiService;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 @Slf4j
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class ApiController {
 
@@ -47,7 +44,7 @@ public class ApiController {
         String key = apiService.findKey();
         log.info("key={}", key);
         //String postResult = apiService.postTokenAndKey(key);
-        String postResult = apiService.httpPostTokenAndKey(key);
+        String postResult = apiService.httpPostTokenAndKey("key");
 
         return ResponseEntity.ok().body(postResult);
     }
