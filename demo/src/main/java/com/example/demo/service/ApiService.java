@@ -11,6 +11,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -18,6 +19,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
 import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @Slf4j
@@ -74,7 +77,9 @@ public class ApiService {
             return apiRepository.saveTokenAndKey(token, clickKey);
         } else {
             log.info("clickKey={}", clickKey);
-            throw new IllegalArgumentException("전달한 click_key 값과 불일치");
+            String errorMessage = "{\"code\":" + HttpStatus.LENGTH_REQUIRED.value() +
+                    ",\"message\":\"잘못된 파라미터입니다.\"}";
+            return errorMessage;
         }
     }
 
