@@ -16,7 +16,6 @@ public class ExControllerAdvice {
     @ExceptionHandler(IllegalArgumentException.class)
     public ErrorResult illegalExHandler(IllegalArgumentException e) {
         log.error("Bad_Request 오류", e);
-
         return new ErrorResult(HttpStatus.BAD_REQUEST.value(), e.getMessage());
     }
 }
