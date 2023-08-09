@@ -25,45 +25,32 @@ import java.util.UUID;
 public class ApiService {
 
     private final ApiRepository apiRepository;
+    private final RestTemplate restTemplate = new RestTemplate();
     private String click_key;
 
     //api 연동 예제 데이터 전송
     public String sendData() {
-
         URI uri = getUri();
-        
-        RestTemplate restTemplate = new RestTemplate();
+
         ResponseEntity<String> response = restTemplate.getForEntity(uri, String.class);
 
         return response.getBody();
     }
 
     public String httpSendData() throws IOException {
-        CloseableHttpClient httpClient = null;
-        String result = null;
-        URI uri = getUri();
 
-        try {
-            httpClient = HttpClientBuilder.create().build();
-
+        try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();) {
+            URI uri = getUri();
             HttpGet get = new HttpGet(uri);
 
-            RequestConfig requestConfig = RequestConfig.custom()
-                    .setConnectTimeout(2 * 1000)
-                    .build();
-            get.setConfig(requestConfig);
+            try (CloseableHttpResponse httpResponse = httpClient.execute(get)) {
+                return EntityUtils.toString(httpResponse.getEntity());
+            }
 
-            CloseableHttpResponse httpResponse = httpClient.execute(get);
-
-            result = EntityUtils.toString(httpResponse.getEntity());
-
-        } catch (IOException e){
-            log.info("http 통신 오류");
-        } finally {
-            httpClient.close();
+        } catch (IOException e) {
+            log.error("http 통신 오류", e);
+            return null;
         }
-
-        return result;
     }
 
     //api 연동 예제 데이터 저장
@@ -73,11 +60,7 @@ public class ApiService {
             return apiRepository.saveTokenAndKey(token, clickKey);
         } else {
             log.info("전달한 click_key 값과 불일치");
-
             throw new IllegalArgumentException("잘못된 파라미터입니다.");
-//            String errorMessage = "{\"code\":" + HttpStatus.BAD_REQUEST.value() +
-//                    ",\"message\":\"잘못된 파라미터입니다.\"}";
-//            return errorMessage;
         }
     }
 

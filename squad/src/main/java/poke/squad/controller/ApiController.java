@@ -6,11 +6,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import poke.squad.service.ApiService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -26,10 +28,10 @@ public class ApiController {
 
     //전달 받은 click_key
     @GetMapping("/cookie-oven")
-    public ResponseEntity<String> getKey(HttpServletRequest request
-                                          /*,@RequestParam("click_key") String clickKey*/) {
+    public ResponseEntity<String> getKey(/*HttpServletRequest request,*/
+                                          @RequestParam("click_key") String clickKey) {
         //파라미터로 받은 click_key
-        String clickKey = ServletRequestUtils.getStringParameter(request, "click_key", "");
+        //String clickKey = ServletRequestUtils.getStringParameter(request, "click_key", "");
         log.info("clickKey={}", clickKey);
 
         //key 저장
@@ -43,9 +45,12 @@ public class ApiController {
     public ResponseEntity<String> postTokenAndKey() throws IOException {
         String key = apiService.findKey();
         log.info("key={}", key);
-        //String postResult = apiService.postTokenAndKey(key);
-        String postResult = apiService.httpPostTokenAndKey("key");
 
-        return ResponseEntity.ok().body(postResult);
+        Map<String, Object> postResult = apiService.postTokenAndKey(key);
+        //Map<String, Object> postResult = apiService.httpPostTokenAndKey(key);
+        int status = (int) postResult.get("status");
+        String result = (String) postResult.get("result");
+
+        return ResponseEntity.status(status).body(result);
     }
 }
