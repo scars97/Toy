@@ -27,7 +27,7 @@ public class ApiController {
     }
 
     //전달 받은 click_key
-    @GetMapping("/cookie-oven")
+    @GetMapping("/get-key")
     public ResponseEntity<String> getKey(/*HttpServletRequest request,*/
                                           @RequestParam("click_key") String clickKey) {
         //파라미터로 받은 click_key

@@ -33,7 +33,7 @@ public class ApiController {
     }
 
     //click_key 전달
-    @GetMapping("/send-data")
+    @GetMapping("/send-key")
     public ResponseEntity<String> sendKey() throws IOException {
         //String sendResult = apiService.sendData();
         String sendResult = apiService.httpSendData();
@@ -43,7 +43,7 @@ public class ApiController {
     }
 
     //token, key 처리
-    @PostMapping("/cookieoven-test")
+    @PostMapping("/return-data")
     public ResponseEntity<String> processTokenAndKey(@RequestBody String result,
                                  @RequestParam("advertiser_token") String token,
                                  @RequestParam("click_key") String clickKey) {

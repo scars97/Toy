@@ -114,7 +114,7 @@ public class ApiService {
 
         URI uri = UriComponentsBuilder
                 .fromUriString(apiUrl)
-                .path("/cookieoven-test")
+                .path("/return-data")
                 .queryParam("advertiser_token", advertiserToken)
                 .queryParam("click_key", clickKey)
                 .encode()

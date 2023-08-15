@@ -79,7 +79,7 @@ public class ApiService {
 
         URI uri = UriComponentsBuilder
                 .fromUriString(apiUrl)
-                .path("/cookie-oven")
+                .path("/get-key")
                 .queryParam("click_key", click_key)
                 .encode()
                 .build()
