@@ -28,10 +28,10 @@ public class ApiController {
 
     //전달 받은 click_key
     @GetMapping("/get-key")
-    public ResponseEntity<String> getKey(/*HttpServletRequest request,*/
-                                          @RequestParam("click_key") String clickKey) {
+    public ResponseEntity<String> getKey(HttpServletRequest request
+                                          /*@RequestParam("click_key") String clickKey*/) {
         //파라미터로 받은 click_key
-        //String clickKey = ServletRequestUtils.getStringParameter(request, "click_key", "");
+        String clickKey = ServletRequestUtils.getStringParameter(request, "click_key", "");
         log.info("clickKey={}", clickKey);
 
         //key 저장

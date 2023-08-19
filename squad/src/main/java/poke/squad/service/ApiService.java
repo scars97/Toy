@@ -52,7 +52,12 @@ public class ApiService {
 
     //click_key 저장
     public String saveKey(String clickKey) {
-        keyStore.put("key", clickKey);
+        if (clickKey != null) {
+            keyStore.put("key", clickKey);
+        } else {
+            throw new IllegalArgumentException("값이 없습니다.");
+        }
+
         return clickKey;
     }
 
