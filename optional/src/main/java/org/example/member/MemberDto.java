@@ -33,4 +33,17 @@ public class MemberDto {
             this.email = email;
         }
     }
+
+    @Getter
+    public static class ResponseDto {
+        private Long id;
+        private String memberId;
+        private String email;
+
+        public ResponseDto(Member member) {
+            this.id = member.getId();
+            this.memberId = member.getMemberId();
+            this.email = member.getEmail();
+        }
+    }
 }
