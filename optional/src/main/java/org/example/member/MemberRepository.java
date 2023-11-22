@@ -6,7 +6,7 @@ import static org.example.member.MemberDto.*;
 
 public interface MemberRepository {
 
-    void save(SaveDto saveDto);
+    Long save(SaveDto saveDto);
     ResponseDto findById(Long id);
     List<ResponseDto> findAll();
     void update(UpdateDto updateDto, Long id);

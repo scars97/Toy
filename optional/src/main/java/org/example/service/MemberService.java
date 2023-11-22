@@ -12,9 +12,9 @@ public class MemberService {
 
     private final MemberRepository memberRepository = new MemoryMemberRepository();
 
-    public void saveMember(SaveDto saveDto) {
+    public Long saveMember(SaveDto saveDto) {
         Optional<SaveDto> saveMember = Optional.ofNullable(saveDto);
-        memberRepository.save(saveMember.orElseThrow(() -> new IllegalArgumentException("입력값 확인 필요")));
+        return memberRepository.save(saveMember.orElseThrow(() -> new IllegalArgumentException("입력값 확인 필요")));
     }
 
     public ResponseDto findById(Long id) {
