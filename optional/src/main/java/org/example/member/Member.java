@@ -7,6 +7,7 @@ import lombok.*;
 public class Member {
 
     private Long id;
+    @NonNull
     private String memberId;
     private String pwd;
     private String email;

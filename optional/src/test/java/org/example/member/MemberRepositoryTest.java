@@ -1,10 +1,8 @@
 package org.example.member;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.example.member.MemberDto.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -52,17 +50,19 @@ class MemberRepositoryTest {
     void update() {
         //given
         Long createId = createMember();
-        UpdateDto updateMember = UpdateDto.builder()
+        ResponseDto findMember = memberRepository.findById(createId);
+        UpdateDto update = UpdateDto.builder()
                 .pwd("1345")
                 .email("update@email.com")
                 .build();
 
         //when
-        memberRepository.update(updateMember, createId);
-        ResponseDto findMember = memberRepository.findById(createId);
+        memberRepository.update(update, createId);
+        ResponseDto updateMember = memberRepository.findById(createId);
 
         //then
-        assertEquals(findMember.getEmail(), updateMember.getEmail());
+        assertEquals(findMember.getId(), updateMember.getId());
+        assertNotEquals(findMember.getEmail(), updateMember.getEmail());
     }
 
     @Test
