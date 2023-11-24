@@ -1,6 +1,8 @@
 package org.example.mealcrud.service;
 
+import org.example.mealcrud.model.Common;
 import org.example.mealcrud.model.InfoProduct;
+import org.example.mealcrud.model.TestModel;
 import org.example.mealcrud.model.dto.*;
 import org.junit.jupiter.api.Test;
 
@@ -26,6 +28,25 @@ class InsertAllTest {
         // then
         List<InfoProduct> infoProduct = (List<InfoProduct>) result.get("상품");
         assertEquals(infoProduct.get(0).getProductCd(), "상품 코드");
+    }
+
+    @Test
+    void testModel() {
+        Common common = Common.builder()
+                .clscd("제어코드")
+                .corpCd("식권사코드")
+                .prefixNo("프리픽스번호")
+                .regUser("성현")
+                .regDate(LocalDateTime.now())
+                .updUser("성현")
+                .updDate(LocalDateTime.now())
+                .build();
+        TestModel test = TestModel.builder()
+                .common(common)
+                .test("test")
+                .build();
+
+        assertEquals(test.getCommon().getClscd(), common.getClscd());
     }
 
     private MultipleDtoRequest create() {
